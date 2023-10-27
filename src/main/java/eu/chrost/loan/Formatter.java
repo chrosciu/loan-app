@@ -13,24 +13,28 @@ public class Formatter {
     }
 
     private String prepareMessage(Request request, Result result) {
-        return switch (result) {
-            case Approval(var amount) when amount >= request.amount() ->
-                    "Loan approved, granted full amount";
-            case Approval(var amount) ->
-                    STR."Loan approved, amount granted: \{amount}";
-            case Refusal(var reason) -> STR."Loan refused due to: \{reason}";
-            case Suspension(var additionalRequirements, var deadline) -> {
-                StringBuilder builder = new StringBuilder("""
-                        Loan processing suspended.
-                        Following additional requirements are needed to make final decision:
-                        """);
-                for (String requirement : additionalRequirements) {
-                    builder.append(requirement);
-                    builder.append("\n");
-                }
-                builder.append(STR."Deadline to fulfill requirements mentioned above: \{deadline}");
-                yield builder.toString();
+        if (result instanceof Approval) {
+            Approval approval = (Approval) result;
+            long amount = approval.getAmount();
+            if (amount >= request.getAmount()) {
+                return "Loan approved, granted full amount";
             }
-        };
+            return String.format("Loan approved, amount granted: %d", amount);
+        } else if (result instanceof Refusal) {
+            Refusal refusal = (Refusal) result;
+            return String.format("Loan refused due to: %s", refusal.getReason());
+        } else if (result instanceof Suspension) {
+            Suspension suspension = (Suspension) result;
+            StringBuilder builder = new StringBuilder();
+            builder.append("Loan processing suspended.\n");
+            builder.append("Following additional requirements are needed to make final decision:\n");
+            for (String requirement : suspension.getAdditionalRequirements()) {
+                builder.append(requirement);
+                builder.append("\n");
+            }
+            builder.append(String.format("Deadline to fulfill requirements mentioned above: %s", suspension.getDeadline()));
+            return builder.toString();
+        }
+        throw new IllegalStateException("Unknown result type");
     }
 }

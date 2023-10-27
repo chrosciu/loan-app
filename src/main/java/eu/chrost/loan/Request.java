@@ -1,4 +1,9 @@
 package eu.chrost.loan;
 
-public record Request(long amount, int years) {
+import lombok.Value;
+
+@Value
+public class Request {
+    long amount;
+    int years;
 }

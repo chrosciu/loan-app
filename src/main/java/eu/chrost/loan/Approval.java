@@ -1,4 +1,8 @@
 package eu.chrost.loan;
 
-public record Approval(long amount) implements Result {
+import lombok.Value;
+
+@Value
+public class Approval implements Result {
+    long amount;
 }

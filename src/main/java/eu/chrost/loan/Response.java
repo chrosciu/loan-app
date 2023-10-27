@@ -1,4 +1,9 @@
 package eu.chrost.loan;
 
-public record Response(String type, String message) {
+import lombok.Value;
+
+@Value
+public class Response {
+    String type;
+    String message;
 }

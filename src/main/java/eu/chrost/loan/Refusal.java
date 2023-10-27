@@ -1,4 +1,8 @@
 package eu.chrost.loan;
 
-public record Refusal(String reason) implements Result {
+import lombok.Value;
+
+@Value
+public class Refusal implements Result {
+    String reason;
 }

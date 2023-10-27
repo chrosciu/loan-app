@@ -13,7 +13,7 @@ public class Api {
 
     @PostMapping
     public Response handle(@RequestBody Request request) {
-        var result = evaluator.processRequest(request);
+        Result result = evaluator.processRequest(request);
         return formatter.prepareResponse(request, result);
     }
 }
