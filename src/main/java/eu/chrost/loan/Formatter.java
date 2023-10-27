@@ -5,8 +5,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class Formatter {
     public Response prepareResponse(Request request, Result result) {
-        return new Response(result.getClass().getSimpleName().toUpperCase(),
-                prepareMessage(request, result));
+        return new Response(getResponseType(result), prepareMessage(request, result));
+    }
+
+    private String getResponseType(Result result) {
+        return result.getClass().getSimpleName().toUpperCase();
     }
 
     private String prepareMessage(Request request, Result result) {
@@ -14,16 +17,18 @@ public class Formatter {
             case Approval(var amount) when amount >= request.amount() ->
                     "Loan approved, granted full amount";
             case Approval(var amount) ->
-                    String.format("Loan approved, amount granted: %d", amount);
-            case Refusal(var reason) -> String.format("Loan refused due to: %s", reason);
+                    STR."Loan approved, amount granted: \{amount}";
+            case Refusal(var reason) -> STR."Loan refused due to: \{reason}";
             case Suspension(var additionalRequirements, var deadline) -> {
-                StringBuilder builder = new StringBuilder();
-                builder.append("Loan processing suspended.");
-                builder.append("Following additional requirements are needed to make final decision: ");
+                StringBuilder builder = new StringBuilder("""
+                        Loan processing suspended.
+                        Following additional requirements are needed to make final decision:
+                        """);
                 for (String requirement : additionalRequirements) {
                     builder.append(requirement);
+                    builder.append("\n");
                 }
-                builder.append(String.format("Deadline to fulfill requirements mentioned above: %s%n", deadline));
+                builder.append(STR."Deadline to fulfill requirements mentioned above: \{deadline}");
                 yield builder.toString();
             }
         };
