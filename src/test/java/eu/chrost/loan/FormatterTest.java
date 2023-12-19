@@ -20,7 +20,7 @@ class FormatterTest {
         var response = formatter.prepareResponse(request, result);
 
         //then
-        assertThat(response).extracting(Response::getType, Response::getMessage)
+        assertThat(response).extracting(Response::type, Response::message)
                 .containsExactly("APPROVAL", "Loan approved, granted full amount");
     }
 
@@ -34,7 +34,7 @@ class FormatterTest {
         var response = formatter.prepareResponse(request, result);
 
         //then
-        assertThat(response).extracting(Response::getType, Response::getMessage)
+        assertThat(response).extracting(Response::type, Response::message)
                 .containsExactly("APPROVAL", "Loan approved, amount granted: 800");
     }
 
@@ -48,7 +48,7 @@ class FormatterTest {
         var response = formatter.prepareResponse(request, result);
 
         //then
-        assertThat(response).extracting(Response::getType, Response::getMessage)
+        assertThat(response).extracting(Response::type, Response::message)
                 .containsExactly("REFUSAL", "Loan refused due to: Period too long");
     }
 
@@ -64,7 +64,7 @@ class FormatterTest {
         var response = formatter.prepareResponse(request, result);
 
         //then
-        assertThat(response).extracting(Response::getType, Response::getMessage)
+        assertThat(response).extracting(Response::type, Response::message)
                 .containsExactly(
                         "SUSPENSION",
                         "Loan processing suspended.\n" +

@@ -23,7 +23,7 @@ class EvaluatorTest {
 
         //then
         assertThat(result).isInstanceOfSatisfying(Refusal.class,
-                refusal -> assertThat(refusal.getReason()).isEqualTo("Amount is too big"));
+                refusal -> assertThat(refusal.reason()).isEqualTo("Amount is too big"));
     }
 
     @Test
@@ -38,7 +38,7 @@ class EvaluatorTest {
         //then
         assertThat(result).isInstanceOfSatisfying(Suspension.class,
                 suspension -> assertThat(suspension)
-                        .extracting(Suspension::getAdditionalRequirements, Suspension::getDeadline)
+                        .extracting(Suspension::additionalRequirements, Suspension::deadline)
                         .containsExactly(List.of("Employee reference"), LocalDate.parse("2025-01-10"))
         );
     }
@@ -53,7 +53,7 @@ class EvaluatorTest {
 
         //then
         assertThat(result).isInstanceOfSatisfying(Approval.class,
-                approval -> assertThat(approval.getAmount()).isEqualTo(800));
+                approval -> assertThat(approval.amount()).isEqualTo(800));
     }
 
 
