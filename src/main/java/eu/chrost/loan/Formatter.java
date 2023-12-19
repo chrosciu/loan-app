@@ -14,9 +14,9 @@ public class Formatter {
 
     private String prepareMessage(Request request, Result result) {
         return switch (result) {
-            case Approval approval when approval.amount() >= request.amount() -> "Loan approved, granted full amount";
-            case Approval approval -> String.format("Loan approved, amount granted: %d", approval.amount());
-            case Refusal refusal -> String.format("Loan refused due to: %s", refusal.reason());
+            case Approval(var amount) when amount >= request.amount() -> "Loan approved, granted full amount";
+            case Approval(var amount) -> String.format("Loan approved, amount granted: %d", amount);
+            case Refusal(var reason) -> String.format("Loan refused due to: %s", reason);
             case Suspension suspension -> buildMessageForSuspension(suspension);
         };
     }
