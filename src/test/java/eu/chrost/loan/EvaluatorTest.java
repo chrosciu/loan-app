@@ -3,7 +3,7 @@ package eu.chrost.loan;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -39,7 +39,7 @@ class EvaluatorTest {
         assertThat(result).isInstanceOfSatisfying(Suspension.class,
                 suspension -> assertThat(suspension)
                         .extracting(Suspension::getAdditionalRequirements, Suspension::getDeadline)
-                        .containsExactly(Arrays.asList("Employee reference"), LocalDate.parse("2025-01-10"))
+                        .containsExactly(List.of("Employee reference"), LocalDate.parse("2025-01-10"))
         );
     }
 
