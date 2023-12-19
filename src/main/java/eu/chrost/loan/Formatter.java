@@ -15,8 +15,8 @@ public class Formatter {
     private String prepareMessage(Request request, Result result) {
         return switch (result) {
             case Approval(var amount) when amount >= request.amount() -> "Loan approved, granted full amount";
-            case Approval(var amount) -> String.format("Loan approved, amount granted: %d", amount);
-            case Refusal(var reason) -> String.format("Loan refused due to: %s", reason);
+            case Approval(var amount) -> STR."Loan approved, amount granted: \{amount}";
+            case Refusal(var reason) -> STR."Loan refused due to: \{reason}";
             case Suspension suspension -> buildMessageForSuspension(suspension);
         };
     }
@@ -30,7 +30,7 @@ public class Formatter {
             builder.append(requirement);
             builder.append("\n");
         }
-        builder.append(String.format("Deadline to fulfill requirements mentioned above: %s", suspension.deadline()));
+        builder.append(STR."Deadline to fulfill requirements mentioned above: \{suspension.deadline()}");
         return builder.toString();
     }
 }
