@@ -66,12 +66,12 @@ class FormatterTest {
         //then
         assertThat(response).extracting(Response::type, Response::message)
                 .containsExactly(
-                        "SUSPENSION",
-                        "Loan processing suspended.\n" +
-                        "Following additional requirements are needed to make final decision:\n" +
-                        "Employee reference\n" +
-                        "Application form\n" +
-                        "Deadline to fulfill requirements mentioned above: 2024-12-31"
+                        "SUSPENSION", """
+                        Loan processing suspended.
+                        Following additional requirements are needed to make final decision:
+                        Employee reference
+                        Application form
+                        Deadline to fulfill requirements mentioned above: 2024-12-31"""
                 );
     }
 }
