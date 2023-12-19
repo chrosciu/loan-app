@@ -13,18 +13,15 @@ public class Formatter {
     }
 
     private String prepareMessage(Request request, Result result) {
-        if (result instanceof Approval) {
-            var approval = (Approval) result;
+        if (result instanceof Approval approval) {
             var amount = approval.amount();
             if (amount >= request.amount()) {
                 return "Loan approved, granted full amount";
             }
             return String.format("Loan approved, amount granted: %d", amount);
-        } else if (result instanceof Refusal) {
-            var refusal = (Refusal) result;
+        } else if (result instanceof Refusal refusal) {
             return String.format("Loan refused due to: %s", refusal.reason());
-        } else if (result instanceof Suspension) {
-            var suspension = (Suspension) result;
+        } else if (result instanceof Suspension suspension) {
             var builder = new StringBuilder();
             builder.append("Loan processing suspended.\n");
             builder.append("Following additional requirements are needed to make final decision:\n");
