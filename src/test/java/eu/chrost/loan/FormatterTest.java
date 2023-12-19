@@ -8,6 +8,8 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FormatterTest {
+    private final Formatter formatter = new Formatter();
+
     @Test
     void approvalFullAmount() {
         //given
@@ -15,7 +17,7 @@ class FormatterTest {
         Result result = new Approval(1000);
 
         //when
-        Response response = new Formatter().prepareResponse(request, result);
+        Response response = formatter.prepareResponse(request, result);
 
         //then
         assertThat(response).extracting(Response::getType, Response::getMessage)
@@ -29,7 +31,7 @@ class FormatterTest {
         Result result = new Approval(800);
 
         //when
-        Response response = new Formatter().prepareResponse(request, result);
+        Response response = formatter.prepareResponse(request, result);
 
         //then
         assertThat(response).extracting(Response::getType, Response::getMessage)
@@ -43,7 +45,7 @@ class FormatterTest {
         Result result = new Refusal("Period too long");
 
         //when
-        Response response = new Formatter().prepareResponse(request, result);
+        Response response = formatter.prepareResponse(request, result);
 
         //then
         assertThat(response).extracting(Response::getType, Response::getMessage)
@@ -59,7 +61,7 @@ class FormatterTest {
                 LocalDate.parse("2024-12-31"));
 
         //when
-        Response response = new Formatter().prepareResponse(request, result);
+        Response response = formatter.prepareResponse(request, result);
 
         //then
         assertThat(response).extracting(Response::getType, Response::getMessage)
