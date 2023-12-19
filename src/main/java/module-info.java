@@ -5,5 +5,5 @@ module eu.chrost.loan {
     requires spring.web;
     requires spring.context;
 
-    opens eu.chrost.loan to spring.context;
+    opens eu.chrost.loan to spring.context, spring.core, spring.beans;
 }
