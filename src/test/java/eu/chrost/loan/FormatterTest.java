@@ -13,11 +13,11 @@ class FormatterTest {
     @Test
     void approvalFullAmount() {
         //given
-        Request request = new Request(1000, 2);
-        Result result = new Approval(1000);
+        var request = new Request(1000, 2);
+        var result = new Approval(1000);
 
         //when
-        Response response = formatter.prepareResponse(request, result);
+        var response = formatter.prepareResponse(request, result);
 
         //then
         assertThat(response).extracting(Response::getType, Response::getMessage)
@@ -27,11 +27,11 @@ class FormatterTest {
     @Test
     void approvalReducedAmount() {
         //given
-        Request request = new Request(1000, 2);
-        Result result = new Approval(800);
+        var request = new Request(1000, 2);
+        var result = new Approval(800);
 
         //when
-        Response response = formatter.prepareResponse(request, result);
+        var response = formatter.prepareResponse(request, result);
 
         //then
         assertThat(response).extracting(Response::getType, Response::getMessage)
@@ -41,11 +41,11 @@ class FormatterTest {
     @Test
     void refusal() {
         //given
-        Request request = new Request(1000, 2);
-        Result result = new Refusal("Period too long");
+        var request = new Request(1000, 2);
+        var result = new Refusal("Period too long");
 
         //when
-        Response response = formatter.prepareResponse(request, result);
+        var response = formatter.prepareResponse(request, result);
 
         //then
         assertThat(response).extracting(Response::getType, Response::getMessage)
@@ -55,13 +55,13 @@ class FormatterTest {
     @Test
     void suspension() {
         //given
-        Request request = new Request(1000, 2);
-        Result result = new Suspension(
+        var request = new Request(1000, 2);
+        var result = new Suspension(
                 Arrays.asList("Employee reference", "Application form"),
                 LocalDate.parse("2024-12-31"));
 
         //when
-        Response response = formatter.prepareResponse(request, result);
+        var response = formatter.prepareResponse(request, result);
 
         //then
         assertThat(response).extracting(Response::getType, Response::getMessage)
