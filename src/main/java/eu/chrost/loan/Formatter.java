@@ -17,17 +17,19 @@ public class Formatter {
             case Approval(var amount) when amount >= request.amount() -> "Loan approved, granted full amount";
             case Approval(var amount) -> String.format("Loan approved, amount granted: %d", amount);
             case Refusal(var reason) -> String.format("Loan refused due to: %s", reason);
-            case Suspension suspension -> {
-                var builder = new StringBuilder();
-                builder.append("Loan processing suspended.\n");
-                builder.append("Following additional requirements are needed to make final decision:\n");
-                for (var requirement : suspension.additionalRequirements()) {
-                    builder.append(requirement);
-                    builder.append("\n");
-                }
-                builder.append(String.format("Deadline to fulfill requirements mentioned above: %s", suspension.deadline()));
-                yield builder.toString();
-            }
+            case Suspension suspension -> buildMessageForSuspension(suspension);
         };
+    }
+
+    private static String buildMessageForSuspension(Suspension suspension) {
+        var builder = new StringBuilder();
+        builder.append("Loan processing suspended.\n");
+        builder.append("Following additional requirements are needed to make final decision:\n");
+        for (var requirement : suspension.additionalRequirements()) {
+            builder.append(requirement);
+            builder.append("\n");
+        }
+        builder.append(String.format("Deadline to fulfill requirements mentioned above: %s", suspension.deadline()));
+        return builder.toString();
     }
 }
