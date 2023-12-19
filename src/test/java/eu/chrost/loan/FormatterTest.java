@@ -3,7 +3,7 @@ package eu.chrost.loan;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -57,7 +57,7 @@ class FormatterTest {
         //given
         var request = new Request(1000, 2);
         var result = new Suspension(
-                Arrays.asList("Employee reference", "Application form"),
+                List.of("Employee reference", "Application form"),
                 LocalDate.parse("2024-12-31"));
 
         //when
