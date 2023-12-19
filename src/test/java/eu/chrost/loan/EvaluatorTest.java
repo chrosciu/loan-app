@@ -16,10 +16,10 @@ class EvaluatorTest {
     @Test
     void refusalDueToAmountTooBig() {
         //given
-        Request request = new Request(25_000, 3);
+        var request = new Request(25_000, 3);
 
         //when
-        Result result = evaluator.processRequest(request);
+        var result = evaluator.processRequest(request);
 
         //then
         assertThat(result).isInstanceOfSatisfying(Refusal.class,
@@ -29,11 +29,11 @@ class EvaluatorTest {
     @Test
     void suspensionWithEmployeeReference() {
         //given
-        Request request = new Request(10_000, 2);
+        var request = new Request(10_000, 2);
         when(calendar.now()).thenReturn(LocalDate.parse("2024-12-31"));
 
         //when
-        Result result = evaluator.processRequest(request);
+        var result = evaluator.processRequest(request);
 
         //then
         assertThat(result).isInstanceOfSatisfying(Suspension.class,
@@ -46,10 +46,10 @@ class EvaluatorTest {
     @Test
     void approvalWithReducedAmount() {
         //given
-        Request request = new Request(1_000, 2);
+        var request = new Request(1_000, 2);
 
         //when
-        Result result = evaluator.processRequest(request);
+        var result = evaluator.processRequest(request);
 
         //then
         assertThat(result).isInstanceOfSatisfying(Approval.class,

@@ -14,21 +14,21 @@ public class Formatter {
 
     private String prepareMessage(Request request, Result result) {
         if (result instanceof Approval) {
-            Approval approval = (Approval) result;
-            long amount = approval.getAmount();
+            var approval = (Approval) result;
+            var amount = approval.getAmount();
             if (amount >= request.getAmount()) {
                 return "Loan approved, granted full amount";
             }
             return String.format("Loan approved, amount granted: %d", amount);
         } else if (result instanceof Refusal) {
-            Refusal refusal = (Refusal) result;
+            var refusal = (Refusal) result;
             return String.format("Loan refused due to: %s", refusal.getReason());
         } else if (result instanceof Suspension) {
-            Suspension suspension = (Suspension) result;
-            StringBuilder builder = new StringBuilder();
+            var suspension = (Suspension) result;
+            var builder = new StringBuilder();
             builder.append("Loan processing suspended.\n");
             builder.append("Following additional requirements are needed to make final decision:\n");
-            for (String requirement : suspension.getAdditionalRequirements()) {
+            for (var requirement : suspension.getAdditionalRequirements()) {
                 builder.append(requirement);
                 builder.append("\n");
             }
