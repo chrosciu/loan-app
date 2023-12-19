@@ -18,9 +18,10 @@ public class Formatter {
             case Approval approval -> String.format("Loan approved, amount granted: %d", approval.amount());
             case Refusal refusal -> String.format("Loan refused due to: %s", refusal.reason());
             case Suspension suspension -> {
-                var builder = new StringBuilder();
-                builder.append("Loan processing suspended.\n");
-                builder.append("Following additional requirements are needed to make final decision:\n");
+                var builder = new StringBuilder("""
+                        Loan processing suspended.
+                        Following additional requirements are needed to make final decision:
+                        """);
                 for (var requirement : suspension.additionalRequirements()) {
                     builder.append(requirement);
                     builder.append("\n");
