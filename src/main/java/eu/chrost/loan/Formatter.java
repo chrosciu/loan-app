@@ -28,7 +28,6 @@ public class Formatter {
                 builder.append(String.format("Deadline to fulfill requirements mentioned above: %s", suspension.deadline()));
                 yield builder.toString();
             }
-            default -> throw new IllegalStateException("Unknown result type");
         };
     }
 }

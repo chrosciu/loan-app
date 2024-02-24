@@ -1,4 +1,4 @@
 package eu.chrost.loan;
 
-public interface Result {
+public sealed interface Result permits Approval, Refusal, Suspension {
 }
