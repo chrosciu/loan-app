@@ -11,12 +11,11 @@ public class Evaluator {
     private final Calendar calendar;
 
     public Result processRequest(Request request) {
-        if (request.amount() > 20_000) {
-            return new Refusal("Amount is too big");
-        }
-        if (request.amount() > 5_000 && request.years() > 1) {
-            return new Suspension(Collections.singletonList("Employee reference"), calendar.now().plusDays(10));
-        }
-        return new Approval(request.amount() * 4 / 5);
+        return switch (request) {
+            case Request(var amount, var years) when amount > 20_000 -> new Refusal("Amount is too big");
+            case Request(var amount, var years) when amount > 5_000 && years > 1 ->
+                    new Suspension(Collections.singletonList("Employee reference"), calendar.now().plusDays(10));
+            case Request(var amount, var years) -> new Approval(amount * 4 / 5);
+        };
     }
 }
